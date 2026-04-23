@@ -1,0 +1,141 @@
+.device-card {
+  background: linear-gradient(135deg, #1e88e5 0%, #0d47a1 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(13, 71, 161, 0.25);
+  transition: transform 0.3s, box-shadow 0.3s;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  border-top: 4px solid #64b5f6;
+}
+
+.device-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(13, 71, 161, 0.35);
+}
+
+.device-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(100, 181, 246, 0.4), rgba(66, 165, 245, 0.3));
+  border-bottom: 2px solid rgba(100, 181, 246, 0.5);
+}
+
+.device-icon {
+  font-size: 2rem;
+  margin-right: 0.5rem;
+}
+
+.device-name {
+  flex: 1;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.status-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.status-btn.on {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.status-btn.on:hover {
+  background-color: #388E3C;
+}
+
+.status-btn.off {
+  background-color: #f44336;
+  color: white;
+}
+
+.status-btn.off:hover {
+  background-color: #d32f2f;
+}
+
+.device-body {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, rgba(100, 181, 246, 0.2), rgba(66, 165, 245, 0.15));
+}
+
+.device-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.device-info:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  color: #e3f2fd;
+  font-weight: 500;
+}
+
+.info-value {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #ffffff;
+  background: rgba(100, 181, 246, 0.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.device-footer {
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(100, 181, 246, 0.4), rgba(66, 165, 245, 0.3));
+  display: flex;
+  gap: 0.5rem;
+  border-top: 1px solid rgba(100, 181, 246, 0.3);
+}
+
+.delete-btn {
+  flex: 1;
+  padding: 0.5rem;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}
+
+@media (max-width: 600px) {
+  .device-card {
+    min-width: 100%;
+  }
+
+  .device-header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .device-name {
+    flex: 1 0 100%;
+  }
+}

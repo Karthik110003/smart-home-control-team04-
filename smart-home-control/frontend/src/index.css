@@ -1,0 +1,266 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #e3f2fd;
+  color: #2c3e50;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.App {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+}
+
+/* Dark Mode Styles */
+html.dark-mode,
+body.dark-mode {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+}
+
+html.dark-mode {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #3d3d3d;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --border-color: #404040;
+  --card-bg: #2d2d2d;
+  --card-shadow: rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode body {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+}
+
+.dark-mode .dashboard-page {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+}
+
+.dark-mode .summary-card,
+.dark-mode .device-card,
+.dark-mode .room-card,
+.dark-mode .scene-card,
+.dark-mode .acceleration {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+  border-color: #404040;
+}
+
+.dark-mode .summary-card:hover,
+.dark-mode .device-card:hover,
+.dark-mode .room-card:hover {
+  background-color: #3d3d3d;
+}
+
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+  border-color: #404040;
+}
+
+.dark-mode input:focus,
+.dark-mode textarea:focus,
+.dark-mode select:focus {
+  border-color: #667eea;
+  background-color: #333;
+}
+
+.dark-mode .energy-page,
+.dark-mode .automations-page,
+.dark-mode .notifications-page,
+.dark-mode .settings-page {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+}
+
+.dark-mode .chart-card,
+.dark-mode .automation-form,
+.dark-mode .settings-section,
+.dark-mode .energy-records,
+.dark-mode .automation-card {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+  border-color: #404040;
+}
+
+.dark-mode .chart-card h2,
+.dark-mode .settings-section h2,
+.dark-mode .automations-header h1 {
+  color: #e0e0e0;
+}
+
+.dark-mode .table {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+}
+
+.dark-mode .energy-table thead {
+  background-color: #333;
+}
+
+.dark-mode .energy-table th,
+.dark-mode .energy-table td {
+  border-color: #404040;
+  color: #e0e0e0;
+}
+
+.dark-mode .energy-table tbody tr:hover {
+  background-color: #333;
+}
+
+.dark-mode .bar-container {
+  background-color: #333;
+}
+
+.dark-mode .pie-legend,
+.dark-mode .detail-item {
+  color: #b0b0b0;
+}
+
+.dark-mode .automation-details {
+  color: #b0b0b0;
+}
+
+.dark-mode .btn-submit,
+.dark-mode .btn-create-automation,
+.dark-mode .btn-add-device {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.dark-mode .form-group label,
+.dark-mode .section-header h2 {
+  color: #e0e0e0;
+}
+
+.dark-mode .error-message {
+  background-color: #4a2a2a;
+  color: #ff9999;
+  border-left-color: #ff6666;
+}
+
+.dark-mode .success-message {
+  background-color: #2a4a2a;
+  color: #99ff99;
+  border-left-color: #66ff66;
+}
+
+.dark-mode .sidebar {
+  background-color: #1a1a1a;
+  border-right: 1px solid #404040;
+}
+
+.dark-mode .nav-item {
+  color: #b0b0b0;
+}
+
+.dark-mode .nav-item:hover {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+}
+
+.dark-mode .nav-item.active {
+  background-color: #667eea;
+  color: white;
+}
+
+.dark-mode .header {
+  background: linear-gradient(90deg, #2d2d2d 0%, #1a1a1a 100%);
+  border-bottom: 1px solid #404040;
+}
+
+.dark-mode .header h1 {
+  color: #e0e0e0;
+}
+
+.dark-mode .profile-avatar {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.global-error {
+  background-color: #f44336;
+  color: white;
+  padding: 15px 20px;
+  margin: 10px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.global-error button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}

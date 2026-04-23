@@ -1,0 +1,231 @@
+.sidebar {
+  width: 260px;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1.5rem 2rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 2rem;
+}
+
+.logo-icon {
+  font-size: 1.8rem;
+}
+
+.logo-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-item {
+  width: 100%;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  padding: 1rem 1.5rem;
+  margin: 0;
+  border-left: 4px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.nav-icon {
+  font-size: 1.3rem;
+  min-width: 24px;
+  text-align: center;
+}
+
+.nav-label {
+  flex: 1;
+  text-align: left;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-left-color: #667eea;
+}
+
+.nav-item.active {
+  background: rgba(102, 126, 234, 0.15);
+  color: #667eea;
+  border-left-color: #667eea;
+}
+
+.sidebar-footer {
+  padding: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.manage-rooms-btn,
+.add-device-btn {
+  width: 100%;
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.manage-rooms-btn {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.manage-rooms-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(118, 75, 162, 0.4);
+}
+
+.add-device-btn {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+}
+
+.add-device-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 220px;
+  }
+
+  .logo-text {
+    font-size: 1.1rem;
+  }
+
+  .nav-label {
+    display: none;
+  }
+
+  .nav-item {
+    justify-content: center;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70px;
+    padding: 1rem 0;
+  }
+
+  .sidebar-logo {
+    padding: 1rem 0.5rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+    border-bottom: none;
+  }
+
+  .logo-text {
+    display: none;
+  }
+
+  .nav-item {
+    padding: 1rem;
+    border-left: 4px solid transparent;
+    border-bottom: 3px solid transparent;
+    justify-content: center;
+  }
+
+  .nav-item:hover,
+  .nav-item.active {
+    border-left: 4px solid transparent;
+    border-bottom-color: #667eea;
+  }
+
+  .sidebar-footer {
+    padding: 1rem 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .manage-rooms-btn,
+  .add-device-btn {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    min-height: auto;
+    position: relative;
+    padding: 0 1rem;
+    gap: 1rem;
+  }
+
+  .sidebar-logo {
+    flex: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.25rem;
+  }
+
+  .nav-item {
+    padding: 0.5rem 1rem;
+    border-left: none;
+    white-space: nowrap;
+  }
+
+  .sidebar-footer {
+    flex: 0;
+    padding: 0;
+    border: none;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .manage-rooms-btn,
+  .add-device-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}
+

@@ -1,0 +1,248 @@
+/* Room Management Section */
+.room-management-section {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 2rem auto;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.room-management-section h2 {
+  font-size: 2rem;
+  color: #333;
+  margin: 0 0 2rem 0;
+  text-align: center;
+}
+
+.room-list {
+  margin-bottom: 2.5rem;
+}
+
+.room-list h3 {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.rooms-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.room-item {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.room-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.room-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.btn-remove-room {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+
+.btn-remove-room:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: rotate(90deg);
+}
+
+.no-rooms-message {
+  color: #999;
+  font-style: italic;
+  text-align: center;
+  padding: 1rem;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.add-room-section {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 2px dashed #e0e0e0;
+}
+
+.add-room-section h3 {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 0 0 1rem 0;
+}
+
+.add-room-form {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.add-room-form input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.add-room-form input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.btn-add-room {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.btn-add-room:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-add-room:active {
+  transform: translateY(0);
+}
+
+.success-message {
+  background: #4caf50;
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark Mode Support */
+.dark-mode .room-management-section {
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.dark-mode .room-management-section h2,
+.dark-mode .room-management-section h3 {
+  color: #e0e0e0;
+}
+
+.dark-mode .add-room-section {
+  background: #1a1a1a;
+  border-color: #444;
+}
+
+.dark-mode .add-room-form input {
+  background: #333;
+  color: #fff;
+  border-color: #444;
+}
+
+.dark-mode .add-room-form input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.dark-mode .no-rooms-message {
+  background: #1a1a1a;
+  color: #999;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .room-management-section {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .rooms-container {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+
+  .add-room-form {
+    flex-direction: column;
+  }
+
+  .btn-add-room {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .room-management-section {
+    padding: 1rem;
+  }
+
+  .room-management-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .rooms-container {
+    grid-template-columns: 1fr;
+  }
+
+  .room-item {
+    padding: 0.75rem;
+  }
+}
