@@ -4,5 +4,8 @@
   "scripts": {
     "build": "cd smart-home-control/frontend && npm install && npm run build",
     "start": "cd smart-home-control/backend && npm install && node server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }
