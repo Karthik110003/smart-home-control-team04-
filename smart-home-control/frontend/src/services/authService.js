@@ -5,7 +5,7 @@ const API_BASE_URL = window.location.origin + '/api';
 const authService = {
   login: async (email, password) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/auth/login`, {
+      const response = await axios.post(`${API_BASE_URL}/login`, {
         email,
         password,
       });
@@ -23,7 +23,7 @@ const authService = {
 
   signup: async (name, email, password) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/auth/signup`, {
+      const response = await axios.post(`${API_BASE_URL}/signup`, {
         name,
         email,
         password,
@@ -43,7 +43,7 @@ const authService = {
   changePassword: async (currentPassword, newPassword) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(`${API_BASE_URL}/auth/change-password`, {
+      const response = await axios.post(`${API_BASE_URL}/change-password`, {
         currentPassword,
         newPassword,
       }, {
@@ -61,7 +61,7 @@ const authService = {
   updateProfile: async (name, email) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.put(`${API_BASE_URL}/auth/profile`, {
+      const response = await axios.put(`${API_BASE_URL}/profile`, {
         name,
         email,
       }, {
