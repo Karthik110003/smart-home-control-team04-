@@ -37,9 +37,6 @@ return (
         <button className="manage-rooms-btn" onClick={() => setPage('rooms')}>
           🏠 Manage Rooms
         </button>
-        <button className="add-member-btn" onClick={() => setPage('add-member')}>
-          👥 Add Member
-        </button>
         <button className="add-device-btn" onClick={() => setPage('add')}>
           + Add Device
         </button>
