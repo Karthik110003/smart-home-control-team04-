@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const Member = require('../models/Member');
+const auth = require('../middleware/auth');
 
 // Create uploads directory if it doesn't exist
 const uploadsDir = path.join(__dirname, '../uploads');
@@ -35,10 +36,10 @@ const upload = multer({
   }
 });
 
-// GET all members
-router.get('/', async (req, res) => {
+// GET all members for current user
+router.get('/', auth, async (req, res) => {
   try {
-    const members = await Member.find().sort({ createdAt: -1 });
+    const members = await Member.find({ userId: req.userId }).sort({ createdAt: -1 });
     res.json({
       success: true,
       count: members.length,
@@ -54,8 +55,8 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET single member by ID
-router.get('/:id', async (req, res) => {
+// GET single member by ID - verify ownership
+router.get('/:id', auth, async (req, res) => {
   try {
     const member = await Member.findById(req.params.id);
     if (!member) {
@@ -64,6 +65,15 @@ router.get('/:id', async (req, res) => {
         error: 'Member not found'
       });
     }
+    
+    // ✅ Security: Verify ownership
+    if (member.userId !== req.userId) {
+      return res.status(403).json({
+        success: false,
+        error: 'Unauthorized: This member does not belong to your account'
+      });
+    }
+    
     res.json({
       success: true,
       data: member
@@ -78,8 +88,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST create new member with image upload
-router.post('/', upload.single('image'), async (req, res) => {
+// POST create new member with image upload - requires auth
+router.post('/', auth, upload.single('image'), async (req, res) => {
   try {
     const { name, rollNumber, year, degree, aboutProject, hobbies, certificate, internship, aboutAim } = req.body;
 
@@ -95,8 +105,8 @@ router.post('/', upload.single('image'), async (req, res) => {
       });
     }
 
-    // Check if roll number already exists
-    const existingMember = await Member.findOne({ rollNumber: rollNumber.trim() });
+    // Check if roll number already exists for this user
+    const existingMember = await Member.findOne({ userId: req.userId, rollNumber: rollNumber.trim() });
     if (existingMember) {
       if (req.file) {
         fs.unlinkSync(req.file.path);
@@ -108,6 +118,7 @@ router.post('/', upload.single('image'), async (req, res) => {
     }
 
     const memberData = {
+      userId: req.userId,
       name: name.trim(),
       rollNumber: rollNumber.trim(),
       year: year.trim(),
@@ -141,8 +152,8 @@ router.post('/', upload.single('image'), async (req, res) => {
   }
 });
 
-// PUT update member with optional image upload
-router.put('/:id', upload.single('image'), async (req, res) => {
+// PUT update member with optional image upload - requires auth and ownership
+router.put('/:id', auth, upload.single('image'), async (req, res) => {
   try {
     const { name, rollNumber, year, degree, aboutProject, hobbies, certificate, internship, aboutAim } = req.body;
     const member = await Member.findById(req.params.id);
@@ -157,9 +168,20 @@ router.put('/:id', upload.single('image'), async (req, res) => {
       });
     }
 
-    // Check if new roll number is different and already exists
+    // ✅ Security: Verify ownership
+    if (member.userId !== req.userId) {
+      if (req.file) {
+        fs.unlinkSync(req.file.path);
+      }
+      return res.status(403).json({
+        success: false,
+        error: 'Unauthorized: This member does not belong to your account'
+      });
+    }
+
+    // Check if new roll number is different and already exists for this user
     if (rollNumber && rollNumber.trim() !== member.rollNumber) {
-      const existingMember = await Member.findOne({ rollNumber: rollNumber.trim() });
+      const existingMember = await Member.findOne({ userId: req.userId, rollNumber: rollNumber.trim() });
       if (existingMember) {
         if (req.file) {
           fs.unlinkSync(req.file.path);
@@ -214,10 +236,10 @@ router.put('/:id', upload.single('image'), async (req, res) => {
   }
 });
 
-// DELETE member
-router.delete('/:id', async (req, res) => {
+// DELETE member - requires auth and ownership verification
+router.delete('/:id', auth, async (req, res) => {
   try {
-    const member = await Member.findByIdAndDelete(req.params.id);
+    const member = await Member.findById(req.params.id);
 
     if (!member) {
       return res.status(404).json({
@@ -225,6 +247,16 @@ router.delete('/:id', async (req, res) => {
         error: 'Member not found'
       });
     }
+
+    // ✅ Security: Verify ownership
+    if (member.userId !== req.userId) {
+      return res.status(403).json({
+        success: false,
+        error: 'Unauthorized: This member does not belong to your account'
+      });
+    }
+
+    await Member.findByIdAndDelete(req.params.id);
 
     // Delete member's image if it exists
     if (member.image) {

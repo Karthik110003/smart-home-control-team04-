@@ -50,7 +50,7 @@ const Members = ({ onSelectMember, onAddMember, onBack }) => {
           <div key={member._id} style={s.card}>
             <div style={s.imgBox}>
               {member.image
-                ? <img src={`${window.location.origin}/uploads/${member.image}`} alt={member.name} style={s.img} onError={e => { e.target.src = 'https://via.placeholder.com/260x200?text=No+Image'; }} />
+                ? <img src={`${window.location.origin.replace(':3000', ':5000')}/uploads/${member.image}`} alt={member.name} style={s.img} onError={e => { e.target.src = 'https://via.placeholder.com/260x200?text=No+Image'; }} />
                 : <div style={s.placeholder}>👤</div>
               }
             </div>

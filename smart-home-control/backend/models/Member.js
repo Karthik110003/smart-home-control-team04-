@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const MemberSchema = new mongoose.Schema({
+  userId: {
+    type: String,
+    required: true,
+    index: true
+  },
   name: {
     type: String,
     required: [true, 'Please provide a member name'],
@@ -65,5 +70,8 @@ MemberSchema.pre('save', function(next) {
   this.updatedAt = Date.now();
   next();
 });
+
+// Compound unique index: member names are unique per user
+MemberSchema.index({ userId: 1, name: 1 }, { unique: true, sparse: true });
 
 module.exports = mongoose.model('Member', MemberSchema);
