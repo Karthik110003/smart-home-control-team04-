@@ -4,7 +4,7 @@
   overflow: hidden;
   box-shadow: 0 6px 16px rgba(13, 71, 161, 0.25);
   transition: transform 0.3s, box-shadow 0.3s;
-  color: white;
+  color: rgb(35, 59, 181);
   display: flex;
   flex-direction: column;
   border-top: 4px solid #64b5f6;
@@ -95,7 +95,7 @@
 .info-value {
   font-weight: 700;
   font-size: 1rem;
-  color: #ffffff;
+  color: #2958ae;
   background: rgba(100, 181, 246, 0.2);
   padding: 2px 8px;
   border-radius: 4px;

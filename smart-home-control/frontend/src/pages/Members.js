@@ -26,7 +26,7 @@ const Members = ({ onSelectMember, onAddMember, onBack }) => {
     title: { textAlign: 'center', fontSize: 28, fontWeight: 700, color: '#2563eb', letterSpacing: 2, marginBottom: 32, textTransform: 'uppercase' },
     grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 24, maxWidth: 1100, margin: '0 auto' },
     card: { border: '1px solid #e5e7eb', borderRadius: 8, overflow: 'hidden', background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' },
-    imgBox: { width: '100%', height: 200, background: '#e5e7eb', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+    imgBox: { width: '100%', height: 280, background: '#e5e7eb', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' },
     img: { width: '100%', height: '100%', objectFit: 'contain' },
     placeholder: { width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#dbeafe', fontSize: 48 },
     cardBody: { padding: '14px 16px', borderTop: '2px solid #2563eb' },

@@ -12,7 +12,7 @@ function Sidebar({ setPage }) {
     { id: 'team', label: 'Team Management', icon: '👥' }
   ];
 
-  return (
+return (
     <aside className="sidebar">
       <div className="sidebar-logo">
         <span className="logo-icon">🏠</span>
@@ -36,6 +36,9 @@ function Sidebar({ setPage }) {
       <div className="sidebar-footer">
         <button className="manage-rooms-btn" onClick={() => setPage('rooms')}>
           🏠 Manage Rooms
+        </button>
+        <button className="add-member-btn" onClick={() => setPage('add-member')}>
+          👥 Add Member
         </button>
         <button className="add-device-btn" onClick={() => setPage('add')}>
           + Add Device
