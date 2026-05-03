@@ -65,6 +65,9 @@ app.use('/api/scenes', scenesRoutes);
 app.use('/api/energy', energyRoutes);
 app.use('/api/members', membersRoutes);
 
+// Serve uploads folder for member images
+app.use('/uploads', express.static(path.join(__dirname, './uploads')));
+
 // Serve frontend
 app.use(express.static(path.join(__dirname, "../frontend/build")));
 
