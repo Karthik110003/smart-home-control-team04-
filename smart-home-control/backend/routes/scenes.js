@@ -32,8 +32,13 @@ router.post('/', auth, async (req, res) => {
 // DELETE - Remove a scene
 router.delete('/:id', auth, async (req, res) => {
   try {
-    const deleted = await Scene.findByIdAndDelete(req.params.id);
-    if (!deleted) return res.status(404).json({ success: false, error: 'Scene not found' });
+    // ✅ Security: Verify ownership
+    const scene = await Scene.findById(req.params.id);
+    if (!scene || scene.userId !== req.userId) {
+      return res.status(404).json({ success: false, error: 'Scene not found' });
+    }
+    
+    await Scene.findByIdAndDelete(req.params.id);
     res.json({ success: true, message: 'Scene deleted' });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });

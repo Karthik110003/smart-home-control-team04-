@@ -51,7 +51,19 @@ app.use((req, res, next) => {
 });
 
 const authRoutes = require('./routes/auth');
+const devicesRoutes = require('./routes/devices');
+const automationsRoutes = require('./routes/automations');
+const scenesRoutes = require('./routes/scenes');
+const energyRoutes = require('./routes/energy');
+const membersRoutes = require('./routes/members');
+
+// Register API routes
 app.use('/api', authRoutes);
+app.use('/api/devices', devicesRoutes);
+app.use('/api/automations', automationsRoutes);
+app.use('/api/scenes', scenesRoutes);
+app.use('/api/energy', energyRoutes);
+app.use('/api/members', membersRoutes);
 
 // Serve frontend
 app.use(express.static(path.join(__dirname, "../frontend/build")));

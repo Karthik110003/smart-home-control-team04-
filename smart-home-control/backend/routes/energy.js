@@ -46,8 +46,13 @@ router.post('/', auth, async (req, res) => {
 // DELETE - Remove an energy record
 router.delete('/:id', auth, async (req, res) => {
   try {
-    const deleted = await Energy.findByIdAndDelete(req.params.id);
-    if (!deleted) return res.status(404).json({ success: false, error: 'Energy record not found' });
+    // ✅ Security: Verify ownership
+    const energy = await Energy.findById(req.params.id);
+    if (!energy || energy.userId !== req.userId) {
+      return res.status(404).json({ success: false, error: 'Energy record not found' });
+    }
+    
+    await Energy.findByIdAndDelete(req.params.id);
     res.json({ success: true, message: 'Energy record deleted' });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
