@@ -73,7 +73,7 @@ const MemberDetail = ({ memberId, onBack }) => {
       <div style={s.card}>
         <div style={s.imgBox}>
           {member.image
-            ? <img src={`http://localhost:5000/uploads/${member.image}`} alt={member.name} style={s.img} onError={e => { e.target.src = 'https://via.placeholder.com/700x260?text=No+Image'; }} />
+            ? <img src={`${window.location.origin}/uploads/${member.image}`} alt={member.name} style={s.img} onError={e => { e.target.src = 'https://via.placeholder.com/700x260?text=No+Image'; }} />
             : <div style={s.placeholder}>👤</div>
           }
         </div>
