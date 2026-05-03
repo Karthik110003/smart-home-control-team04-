@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -118,19 +119,9 @@ router.post('/login', async (req, res) => {
 });
 
 // Verify Token (Protected route)
-router.post('/verify', async (req, res) => {
+router.post('/verify', auth, async (req, res) => {
   try {
-    const token = req.headers.authorization?.replace('Bearer ', '');
-    
-    if (!token) {
-      return res.status(401).json({ 
-        success: false,
-        message: 'No token provided' 
-      });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key-change-in-production');
-    const user = await User.findById(decoded.id);
+    const user = await User.findById(req.userId);
 
     if (!user) {
       return res.status(401).json({ 
@@ -157,19 +148,11 @@ router.post('/verify', async (req, res) => {
 });
 
 // Change Password (Protected route)
-router.post('/change-password', async (req, res) => {
+router.post('/change-password', auth, async (req, res) => {
   try {
-    const token = req.headers.authorization?.replace('Bearer ', '');
     const { currentPassword, newPassword } = req.body;
 
     // Validate inputs
-    if (!token) {
-      return res.status(401).json({ 
-        success: false,
-        message: 'No token provided' 
-      });
-    }
-
     if (!currentPassword || !newPassword) {
       return res.status(400).json({ 
         success: false,
@@ -184,11 +167,8 @@ router.post('/change-password', async (req, res) => {
       });
     }
 
-    // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key-change-in-production');
-    
     // Get user with password
-    const user = await User.findById(decoded.id).select('+password');
+    const user = await User.findById(req.userId).select('+password');
     if (!user) {
       return res.status(401).json({ 
         success: false,
@@ -223,33 +203,33 @@ router.post('/change-password', async (req, res) => {
 });
 
 // Update Profile (Protected route)
-router.put('/profile', async (req, res) => {
+router.put('/profile', auth, async (req, res) => {
   try {
-    const token = req.headers.authorization?.replace('Bearer ', '');
     const { name, email } = req.body;
 
-    if (!token) {
-      return res.status(401).json({ 
+    // Validate inputs
+    if (!name || !email) {
+      return res.status(400).json({
         success: false,
-        message: 'No token provided' 
+        message: 'Name and email are required'
       });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key-change-in-production');
-    
     // Update user
     const user = await User.findByIdAndUpdate(
-      decoded.id,
+      req.userId,
       { name, email },
       { new: true, runValidators: true }
     );
 
     if (!user) {
-      return res.status(404).json({ 
+      return res.status(404).json({
         success: false,
-        message: 'User not found' 
+        message: 'User not found'
       });
     }
+
+    console.log('Profile updated for user:', req.userId, 'name:', name, 'email:', email);
 
     res.json({
       success: true,
@@ -262,9 +242,9 @@ router.put('/profile', async (req, res) => {
     });
   } catch (error) {
     console.error('Update profile error:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      message: error.message || 'Error updating profile' 
+      message: error.message || 'Error updating profile'
     });
   }
 });

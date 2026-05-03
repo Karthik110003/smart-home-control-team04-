@@ -352,55 +352,68 @@ function Settings({ onDarkModeChange, user, onLogout, onUserUpdate, onAccountCha
     }
   };
 
-  const handleSaveProfile = () => {
-    // Load existing account profiles
-    const accountProfiles = localStorage.getItem('accountProfiles');
-    let profiles = {};
-    if (accountProfiles) {
-      try {
-        profiles = JSON.parse(accountProfiles);
-      } catch (err) {
-        console.error('Error loading profiles:', err);
-      }
-    }
-
-    // Save the current account's profile
-    profiles[selectedAccount] = profile;
-    localStorage.setItem('accountProfiles', JSON.stringify(profiles));
-    
-    // Always update the user object in localStorage with latest profile
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      try {
-        let parsedUser = JSON.parse(userData);
-        const currentUserId = parsedUser.id || parsedUser.email;
-        
-        // If the profile being saved is for the currently logged-in user, update it
-        if (selectedAccount === currentUserId) {
-          const updatedUser = {
-            ...parsedUser,
-            name: profile.name,
-            email: profile.email,
-            phone: profile.phone,
-            homeAddress: profile.homeAddress,
-            plan: profile.plan
-          };
-          localStorage.setItem('user', JSON.stringify(updatedUser));
-          console.log('Profile saved for current user:', currentUserId);
-          
-          if (onUserUpdate) {
-            onUserUpdate(updatedUser);
-          }
+  const handleSaveProfile = async () => {
+    try {
+      setLoading(true);
+      
+      // Load existing account profiles
+      const accountProfiles = localStorage.getItem('accountProfiles');
+      let profiles = {};
+      if (accountProfiles) {
+        try {
+          profiles = JSON.parse(accountProfiles);
+        } catch (err) {
+          console.error('Error loading profiles:', err);
         }
-      } catch (err) {
-        console.error('Error updating user object:', err);
       }
+
+      // Save the current account's profile locally
+      profiles[selectedAccount] = profile;
+      localStorage.setItem('accountProfiles', JSON.stringify(profiles));
+      
+      // Always update the user object in localStorage with latest profile
+      const userData = localStorage.getItem('user');
+      if (userData) {
+        try {
+          let parsedUser = JSON.parse(userData);
+          const currentUserId = parsedUser.id || parsedUser.email;
+          
+          // If the profile being saved is for the currently logged-in user, update it
+          if (selectedAccount === currentUserId) {
+            // Save to backend (MongoDB) for the logged-in user
+            console.log('Saving profile to backend for user:', profile.name, profile.email);
+            await authService.updateProfile(profile.name, profile.email);
+            
+            const updatedUser = {
+              ...parsedUser,
+              name: profile.name,
+              email: profile.email,
+              phone: profile.phone,
+              homeAddress: profile.homeAddress,
+              plan: profile.plan
+            };
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+            console.log('Profile saved to backend and localStorage for current user:', currentUserId);
+            
+            if (onUserUpdate) {
+              onUserUpdate(updatedUser);
+            }
+          }
+        } catch (err) {
+          console.error('Error updating user object:', err);
+        }
+      }
+      
+      console.log('Profile saved:', profile.name, 'for account:', selectedAccount);
+      setSaved(true);
+      setProfileEditing(false);
+      setTimeout(() => setSaved(false), 3000);
+    } catch (error) {
+      console.error('Error saving profile:', error);
+      alert('Failed to save profile: ' + (error.message || 'Unknown error'));
+    } finally {
+      setLoading(false);
     }
-    
-    console.log('Profile saved:', profile.name, 'for account:', selectedAccount);
-    setSaved(true);
-    setProfileEditing(false);
-    setTimeout(() => setSaved(false), 3000);
   };
 
   const handleSave = () => {
