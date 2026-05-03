@@ -9,7 +9,9 @@ app.use(cors());
 
 app.use(express.json());
 
-// API routes here
+
+const authRoutes = require('./routes/auth');
+app.use('/api', authRoutes);
 
 // Serve frontend
 app.use(express.static(path.join(__dirname, "../frontend/build")));
