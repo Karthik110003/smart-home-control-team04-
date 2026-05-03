@@ -14,20 +14,41 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
+let dbConnected = false;
+
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/smart-home-db', {
+    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/smart-home-db';
+    console.log(`Attempting to connect to MongoDB...`);
+    
+    await mongoose.connect(mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 5000,
     });
     console.log("✓ Connected to MongoDB");
+    dbConnected = true;
   } catch (error) {
-    console.error("MongoDB connection error:", error.message);
-    process.exit(1);
+    console.error("⚠️ MongoDB connection failed:", error.message);
+    console.error("App will continue to run, but database operations will fail");
+    dbConnected = false;
   }
 };
 
+// Start DB connection (don't wait for it)
 connectDB();
+
+// Middleware to check DB connection for API routes
+app.use((req, res, next) => {
+  if (!dbConnected && req.path.startsWith('/api')) {
+    return res.status(503).json({ 
+      success: false,
+      message: 'Database connection unavailable. Please try again later.' 
+    });
+  }
+  next();
+});
 
 const authRoutes = require('./routes/auth');
 app.use('/api', authRoutes);
