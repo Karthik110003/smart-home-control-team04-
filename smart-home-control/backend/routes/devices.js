@@ -27,13 +27,18 @@ router.post('/', auth, async (req, res) => {
 // UPDATE device
 router.put('/:id', auth, async (req, res) => {
   try {
-    const device = await Device.findByIdAndUpdate(
+    // ✅ Security: Verify ownership
+    const device = await Device.findById(req.params.id);
+    if (!device || device.userId !== req.userId) {
+      return res.status(404).json({ success: false, error: 'Device not found' });
+    }
+
+    const updated = await Device.findByIdAndUpdate(
       req.params.id,
       { ...req.body },
       { new: true }
     );
-    if (!device) return res.status(404).json({ success: false, error: 'Device not found' });
-    res.json({ success: true, data: device });
+    res.json({ success: true, data: updated });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -42,8 +47,13 @@ router.put('/:id', auth, async (req, res) => {
 // DELETE device
 router.delete('/:id', auth, async (req, res) => {
   try {
-    const device = await Device.findByIdAndDelete(req.params.id);
-    if (!device) return res.status(404).json({ success: false, error: 'Device not found' });
+    // ✅ Security: Verify ownership
+    const device = await Device.findById(req.params.id);
+    if (!device || device.userId !== req.userId) {
+      return res.status(404).json({ success: false, error: 'Device not found' });
+    }
+
+    await Device.findByIdAndDelete(req.params.id);
     res.json({ success: true, message: 'Deleted' });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
